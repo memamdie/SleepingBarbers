@@ -9,23 +9,26 @@
 #ifndef semaphore_h
 #define semaphore_h
 
+
+
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/types.h>
 #include <sys/queue.h>
 #include <pthread.h>
-//#include <semaphore.h>
 
 typedef struct {
-    int value;	 //The value will be incremented and decremented as it is flagged up and down
-	pthread_mutex_t* mutex;		 // The lock that will be used to add and remove elements from the singular queue 
-	pthread_cond_t* cond;
-//	SIMPLEQ_ENTRY(entry) next;   // link to next entry
-//	SIMPLEQ_HEAD(queuehead, entry) head;
+    int value, initialCount, currentSleepCount;	 //The value will be incremented and decremented as it is flagged up and down
+	pthread_mutex_t mutex;		 // The lock that will be used to add and remove elements from the singular queue 
+	pthread_cond_t cond;	
+//	SIMPLEQ_HEAD(queue, simpleq);
 } semaphore_t;
 
-semaphore_t* semaphore;
-
+typedef struct {
+	pthread_cond_t i;            // data
+//	SIMPLEQ_ENTRY(entry) next;   // link to next entry
+} simpleq;
 semaphore_t* createSemaphore(int initialCount);
 
 void destroySemaphore( semaphore_t* sem);
