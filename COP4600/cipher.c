@@ -36,25 +36,50 @@ void createData(char *up, char *down, char *digit, int lkey, int nkey) {
 
 
 int main(int argc, char** argv) {
-    char* lower = "abcdefghijklmnopqrstuvwxyz";
-    char* upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char* numbers = "0123456789";
-	printf("\nRunning the cipher on the alphabet in lowercase\n");
-	cipher(lower, 1, 2);
-	printf("\nRunning the cipher on the alphabet in uppercase\n");
-	cipher(upper, 1, 2);
-        printf("\nRunning the cipher on some numbers\n");
-        cipher(numbers, 1, 2);
-        printf("%s", numbers);
+    
+    char *lower, *upper, *numbers, letter;
+    int i;
+    
+    lower = (char*) malloc(sizeof(char)*27);
+    upper = (char*) malloc(sizeof(char)*27);
+    numbers = (char*) malloc(sizeof(char)*11);
+    for(i = 0; i < 10; i++) {
+        numbers[i] = '0' + i;
+    }
+    for(letter = 'A'; letter <= 'Z'; (int) letter++) {
+        upper[letter - 'A'] = letter;
+    }
+    for(letter = 'a'; letter <= 'z';(int) letter++) {
+        lower[letter - 'a'] = letter;
+    }
+    upper[26] = '\0';
+    lower[26] = '\0';
+    numbers[10] = '\0';
+    printf("\nRunning the cipher on the alphabet in lowercase\n");
+    cipher(lower, 1, 2);
+    printf("%s\n", lower);
+        
+    printf("\nRunning the cipher on the alphabet in uppercase\n");
+    cipher(upper, 1, 2);
+    printf("%s\n", upper);
 
+        
+    printf("\nRunning the cipher on some numbers\n");
+    cipher(numbers, 1, 2);
+    printf("%s\n", numbers);
+    
+    free(upper);
+    free(lower);
+    free(numbers);
     return 0;
 }
  int cipher( char *text, int lkey, int nkey  ) {
 	int i;
-	char c, newChar,*up, *down, *digit;
+	char c, newChar,*up, *down, *digit, *output;
         up = (char*) malloc(sizeof(char)*26);
 	down = (char*) malloc(sizeof(char)*26);
-	digit =  (char*) malloc(sizeof(char)*26);
+	digit =  (char*) malloc(sizeof(char)*10);
+        output = (char*) malloc(sizeof(text)*26);
 	createData(up, down, digit, lkey, nkey);
 	for(i = 0; i < strlen(text); i++) {
             c = text[i];
@@ -75,7 +100,11 @@ int main(int argc, char** argv) {
                     newChar = c;
                     break;
             }
-            printf("This is the value that you get, %c\n", newChar);
-            //text[i] = newChar;
+            text[i] = newChar;
 	}
+	free(up);
+	free(down);
+	free(digit);
+	free(output);
 }
+
