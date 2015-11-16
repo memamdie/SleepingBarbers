@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
 //    printf("%s\nThe length of the long combined string is %d", combined, strlen(combined));
 //        
     printf("\nRunning the cipher on the alphabet in lowercase\n");
-    cipher(lower, 1, 2);
+    cipher(lower, 2, 3);
     printf("%s\n", lower);
         
     printf("\nRunning the cipher on the alphabet in uppercase\n");
