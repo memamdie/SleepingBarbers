@@ -37,58 +37,34 @@ void createData(char *up, char *down, char *digit, int lkey, int nkey) {
 
 
 int main(int argc, char** argv) {
-    
-    char *lower, *upper, *numbers, *combined, letter;
     int i;
-    combined =  (char*) malloc(sizeof(char)*1030);
-    lower = (char*) malloc(sizeof(char)*27);
-    upper = (char*) malloc(sizeof(char)*27);
-    numbers = (char*) malloc(sizeof(char)*11);
-    letter = '0';
-    for(i = 0; i < 1030; i++){            
-        combined[i] = letter;
-
-        if((int) letter < 122) {
-            (int) letter++;
-        }
-        else {
-            letter = '0';     
-        }
-    }
-    for(i = 0; i < 10; i++) {
-        numbers[i] = '0' + i;
-    }
-    for(letter = 'A'; letter <= 'Z'; (int) letter++) {
-        upper[letter - 'A'] = letter;
-    }
-    for(letter = 'a'; letter <= 'z';(int) letter++) {
-        lower[letter - 'a'] = letter;
-    }
-    upper[26] = '\0';
-    lower[26] = '\0';
-    numbers[10] = '\0';
-    combined[1030] = '\0';
-//    printf("\nRunning the cipher on a super long combined string\n");
-//    cipher(combined, 1, 2);
-//    printf("%s\nThe length of the long combined string is %d", combined, strlen(combined));
-//        
-    printf("\nRunning the cipher on the alphabet in lowercase\n");
+    char upper[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char lower[26] = "abcdefghijklmnopqrstuvwxyz";
+    char numbers[10] = "0123456789";
+    char combined[1030] = "0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdefghijklmnopqrstuvwxyz0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[/]^_`abcdef";
+    char all[15] = "abcdEFGHij09KL1";
+    printf("\nRunning the cipher on a super long combined string larger than 1025.\n\nThe initial string is: %s\n", combined);
+    cipher(combined, 1, 2);
+    printf("\n\n\nThe output is: %s\nThe length of the long combined string is %d\n", combined, strlen(combined));
+      
+    printf("\nRunning the cipher on the alphabet in lowercase\n\nThe initial string is: %s\n", lower);
     cipher(lower, 2, 3);
-    printf("%s\n", lower);
+    printf("\nThe output is: %s\n", lower);
         
-    printf("\nRunning the cipher on the alphabet in uppercase\n");
-    cipher(upper, 1, 2);
-    printf("%s\n", upper);
+    printf("\nRunning the cipher on the alphabet in uppercase\n\nThe initial string is: %s\n", upper);
+    cipher(upper, 5, 2);
+    printf("\nThe output is: %s\n", upper);
 
         
-    printf("\nRunning the cipher on some numbers\n");
-    cipher(numbers, 1, 2);
-    printf("%s\n", numbers);
+    printf("\nRunning the cipher on some numbers\n\nThe initial string is: %s\n", numbers);
+    cipher(numbers, 2, 2);
+    printf("\nThe output is: %s\n", numbers);
     
-    free(upper);
-    free(lower);
-    free(numbers);
-    free(combined);
+
+    printf("\nRunning the cipher on a combination of letters (capital or lowercase) and numbers\n\nThe initial string is: %s\n", numbers);
+    cipher(all, 7, 2);
+    printf("\nThe output is: %s\n", all);
+
     return 0;
 }
  int cipher( char *text, int lkey, int nkey  ) {
