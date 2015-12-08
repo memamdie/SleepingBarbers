@@ -112,7 +112,7 @@ int sys_cipher( struct proc *p, void *v, register_t *retval ) {
 	for(letter = '0'; letter <= '9'; letter++) {
 		digit[letter - '0'] = ((letter - '0' + (k_nkey % 10) + 10) % 10) + '0';
 	}
-
+    //Pass 1
 	substring[2] = '\0';
 	for(i = 0; i < strlen(ktext) && i < 1024; i++) {
             c = ktext[i];
@@ -138,6 +138,7 @@ int sys_cipher( struct proc *p, void *v, register_t *retval ) {
 	if(strlen(ktext) > 1025) {
 		ktext[1025] = '\0';
 	}
+    //free things that we malloc'ed
 	free(up, M_TEMP);
 	free(down, M_TEMP);
 	free(digit, M_TEMP);
@@ -158,23 +159,27 @@ int sys_cipher( struct proc *p, void *v, register_t *retval ) {
             }
             else {
                 j = strlen(ktext) - i;
+                //Case |QUAD| == 3
                 if (j == 3) {
                     newChar = ktext[i];
                     ktext[i] = ktext[strlen(ktext)-1];
                     ktext[strlen(ktext)-1] = newChar;
                     break;
                 }
+                //Case |QUAD| == 2
                 else if(j == 2) {
                     newChar = ktext[i];
                     ktext[i] = ktext[strlen(ktext)-1];
                     ktext[strlen(ktext)-1] = newChar;
                     break;
                 }
+                //Case |QUAD| == 1
                 else {
                     ktext[i] = ktext[i];
                     break;
                 }
             }
         }
+    //free the malloc
 	free(substring, M_TEMP);
 }

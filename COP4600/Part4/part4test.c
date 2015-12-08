@@ -18,10 +18,6 @@ int main(int argc, char** argv) {
     printf("\nRunning the cipher on some numbers\n");
     syscall(SYS_cipher, numbers, 1, 2);
     printf("%s\n", numbers);
-    
-//    free(upper);
-//    free(lower);
-//    free(numbers);
-//    free(combined);
+
     return 0;
 	}

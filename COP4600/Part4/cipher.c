@@ -61,7 +61,7 @@ int main(int argc, char** argv) {
     printf("\nThe output is: %s\n", numbers);
     
 
-    printf("\nRunning the cipher on a combination of letters (capital or lowercase) and numbers\n\nThe initial string is: %s\n", numbers);
+    printf("\nRunning the cipher on a combination of letters (capital or lowercase) and numbers\n\nThe initial string is: %s\n", all);
     cipher(all, 7, 2);
     printf("\nThe output is: %s\n", all);
 
