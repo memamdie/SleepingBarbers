@@ -1,0 +1,46 @@
+cost = 0
+1-1
+cost = 5
+1-2
+cost = 2
+1-3
+cost = 8
+1-2-4
+cost = 18
+1-2-4-5
+NO PATH
+cost = 0
+2-2
+cost = -2
+2-3 
+cost = 3
+2-4
+cost = 13
+2-4-5
+NO PATH
+cost = 26
+3-4-5-2
+cost = 0
+3-3
+cost = 7
+3-4
+cost = 17
+3-4-5
+NO PATH
+cost = 19
+4-5-2
+cost = 17
+4-5-2-3
+cost = 0
+4-4
+cost = 10
+4-5
+NO PATH
+cost = 9
+5-2
+cost = 7
+5-2-3
+cost = 12
+5-2-4
+cost = 0
+5-5

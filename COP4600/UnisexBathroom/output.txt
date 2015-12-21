@@ -1,0 +1,90 @@
+Upon starting, Woman 8 is attempting to sleep for 541 ns.
+Upon starting, Man 1 is attempting to sleep for 925 ns.
+Upon starting, Man 0 is attempting to sleep for 780 ns.
+Upon starting, Woman 1 is attempting to sleep for 39 ns.
+Upon starting, Woman 0 is attempting to sleep for 85 ns.
+Upon starting, Woman 9 is attempting to sleep for 429 ns.
+Upon starting, Woman 2 is attempting to sleep for 994 ns.
+Upon starting, Woman 6 is attempting to sleep for 742 ns.
+Upon starting, Woman 7 is attempting to sleep for 338 ns.
+Upon starting, Woman 3 is attempting to sleep for 811 ns.
+Upon starting, Woman 5 is attempting to sleep for 28 ns.
+Upon starting, Woman 4 is attempting to sleep for 694 ns.
+Upon starting, Man 3 is attempting to sleep for 278 ns.
+Upon starting, Man 5 is attempting to sleep for 730 ns.
+Upon starting, Man 6 is attempting to sleep for 352 ns.
+Upon starting, Man 4 is attempting to sleep for 190 ns.
+Upon starting, Man 2 is attempting to sleep for 209 ns.
+Upon starting, Man 8 is attempting to sleep for 452 ns.
+Upon starting, Man 7 is attempting to sleep for 182 ns.
+Upon starting, Man 9 is attempting to sleep for 140 ns.
+Woman 5  entered the toilet.
+Woman 5 is using the bathroom for 1657 ns.
+Woman 1  entered the toilet.
+Woman 1 is using the bathroom for 464 ns.
+Woman 0  entered the toilet.
+Woman 0 is using the bathroom for 1196 ns.
+Man 9 is waiting to enter
+Man 7 is waiting to enter
+Man 4 is waiting to enter
+Man 2 is waiting to enter
+Man 3 is waiting to enter
+Woman 7  entered the toilet.
+Woman 7 is using the bathroom for 1398 ns.
+Man 6 is waiting to enter
+Woman 9  entered the toilet.
+Woman 9 is using the bathroom for 1106 ns.
+Man 8 is waiting to enter
+Woman 1  left the toilet.
+Woman 8  entered the toilet.
+Woman 8 is using the bathroom for 1611 ns.
+Woman 4  entered the toilet.
+Woman 4 is using the bathroom for 1773 ns.
+Man 5 is waiting to enter
+Woman 6  entered the toilet.
+Woman 6 is using the bathroom for 380 ns.
+Man 0 is waiting to enter
+Woman 3  entered the toilet.
+Woman 3 is using the bathroom for 679 ns.
+Man 1 is waiting to enter
+Woman 2  entered the toilet.
+Woman 2 is using the bathroom for 628 ns.
+Woman 6  left the toilet.
+Woman 0  left the toilet.
+Woman 3  left the toilet.
+Woman 9  left the toilet.
+Woman 2  left the toilet.
+Woman 5  left the toilet.
+Woman 7  left the toilet.
+Woman 8  left the toilet.
+Woman 4  left the toilet.
+Man 9  entered the toilet.
+Man 4  entered the toilet.
+Man 4 is using the bathroom for 1271 ns.
+Man 7  entered the toilet.
+Man 7 is using the bathroom for 709 ns.
+Man 8  entered the toilet.
+Man 3  entered the toilet.
+Man 3 is using the bathroom for 1224 ns.
+Man 2  entered the toilet.
+Man 2 is using the bathroom for 2 ns.
+Man 8 is using the bathroom for 1264 ns.
+Man 5  entered the toilet.
+Man 5 is using the bathroom for 1918 ns.
+Man 0  entered the toilet.
+Man 1  entered the toilet.
+Man 1 is using the bathroom for 1189 ns.
+Man 2  left the toilet.
+Man 6  entered the toilet.
+Man 6 is using the bathroom for 1877 ns.
+Man 9 is using the bathroom for 1370 ns.
+Man 0 is using the bathroom for 1455 ns.
+Man 7  left the toilet.
+Man 1  left the toilet.
+Man 3  left the toilet.
+Man 8  left the toilet.
+Man 4  left the toilet.
+Man 9  left the toilet.
+Man 0  left the toilet.
+Man 6  left the toilet.
+Man 5  left the toilet.

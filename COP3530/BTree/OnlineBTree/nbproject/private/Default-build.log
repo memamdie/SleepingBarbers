@@ -1,0 +1,1 @@
+g++ -o bTree main.cpp bTreeNode.h bTree.cpp bTreeNode.cpp

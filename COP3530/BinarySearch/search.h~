@@ -1,0 +1,101 @@
+/* 
+ * File:   search.h
+ * Author: memamdie
+ *
+ * Created on March 19, 2015, 12:22 PM
+ */
+
+#ifndef SEARCH_H
+#define	SEARCH_H
+#include <iostream>
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <fstream>
+
+using namespace std;
+
+class Search {
+private:
+    int sizeOfArray, elementsToBeSearched, element, size, lo, hi, mid, *list, *searchArray;
+    string fileName, number;
+    bool found;
+public:
+    Search(string fileName) {
+        found = false;
+        ifstream file;
+        file.open(fileName.c_str());
+        file >> number;
+        sizeOfArray = atoi((number).c_str());
+	try {
+        	list = new int[sizeOfArray];
+	} 
+	catch (exception e) {
+		throw "Out of Memory."	
+	}
+        file >> number;
+        elementsToBeSearched = atoi((number).c_str());
+	try {
+        	searchArray = new int[elementsToBeSearched];
+	} 
+	catch (exception e) {
+		throw "Out of Memory."	
+	}
+        for(int i = 0; i < sizeOfArray; i++) {
+            file >> number;
+            if(i < sizeOfArray) {
+                list[i] = atoi((number).c_str());
+            }
+        }
+        sort(list, list + sizeOfArray);
+        for(int i = 0; i < elementsToBeSearched; i++) {
+            file >> number;
+            searchArray[i] = atoi((number).c_str());
+        }
+        file.close();
+    }
+    int numOfSearches() {
+        return elementsToBeSearched;
+    }  
+    bool linear(int index) {
+        element = searchArray[index];
+        for(int i = 0; i < sizeOfArray; i++) {
+            int temp = list[i];
+            if(list[i] == element) {
+                found = true;
+                break;
+            }
+            else {
+                found = false;
+            }
+        }
+        return found;
+    }
+    bool binary(int index) {
+        found = false;
+        element = searchArray[index];
+        size = sizeOfArray;
+        lo = 0;
+        hi = size-1;
+        mid = size/2;
+        while(lo != hi && hi != mid && mid != lo){
+            if(list[mid] < element) {
+                lo = mid;
+                size = hi-lo;
+                mid +=  size/2;
+            }
+            else if(list[mid] > element) {
+                hi = mid;
+                size = hi - lo;
+                mid -= size/2;
+            }
+            else if(list[mid] == element) {
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+};
+
+#endif	/* SEARCH_H */

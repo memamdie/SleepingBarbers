@@ -1,0 +1,20 @@
+Method Summary
+
+bool binary (int)
+	Returns a boolean value as to whether or not the value was found
+bool linear (int)
+	Returns a boolean value as to whether or not the value was found
+Search(string)
+	Creates two arrays, the first is used to store all the numbers that need to be collected. The second array contains the values we will be searching for. 
+int numberOfSearches()
+	Returns the size of the second array
+int main()
+	The main takes in the name of the file you have created then creates an output file that it will write to. The main also calls the search methods and then writes to the output file as it conducts the search.
+
+
+Method Detail
+
+binary
+
+public bool binary(int a)
+

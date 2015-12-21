@@ -1,0 +1,36 @@
+
+
+#include "search.h"
+
+int main(int argc, const char * argv[]) {
+    string inputFile;
+    bool answer;
+    cout << "What file would you like to read in?" << endl;
+    cin >> inputFile;
+    Search *mySearch = new Search(inputFile);
+    int searches = mySearch -> numOfSearches();
+    mySearch -> print();
+    mySearch -> printSearch();
+    cout << "Linear Search:\n";
+    for(int i = 0; i < searches; i++) {
+        answer = mySearch -> linear(i);
+        if(answer) {
+            cout << "Yes" << endl;
+        }
+        else {
+            cout << "No" << endl;
+        }
+    }
+    //mySearch -> print();
+    cout << "Binary Search:\n" << endl;
+    for(int i = 0; i < searches; i++) {
+        answer = mySearch -> binary(i);
+        if(answer) {
+            cout << "Yes" << endl;
+        }
+        else {
+            cout << "No" << endl;
+        }
+    }
+    return 0;
+}
