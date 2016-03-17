@@ -15,42 +15,12 @@ end entity;
 
 architecture arch of vga is
 
-component vga_rom
-  port (
-      address : in std_logic_vector(11 downto 0);
-      clock   : in std_logic := '1';
-      q       : out std_logic_vector(11 downto 0)
-  );
-end component;
-
 component vga_rom_128
   port (
       address : in std_logic_vector(13 downto 0);
       clock   : in std_logic := '1';
       q       : out std_logic_vector(11 downto 0)
   );
-end component;
-
-component column_decoder
-  generic (
-    WIDTH : positive := 10 );
-  port (
-      hcount  : in std_logic_vector(WIDTH-1 downto 0);
-      buttons : in std_logic_vector(2 downto 0);
-      address : out std_logic_vector(5 downto 0);
-      enable  : out std_logic
-  );
-end component;
-
-component row_decoder
-  generic (
-    WIDTH : positive := 10 );
-  port (
-      vcount  : in std_logic_vector(WIDTH-1 downto 0);
-      buttons : in std_logic_vector(2 downto 0);
-      address : out std_logic_vector(5 downto 0);
-      enable  : out std_logic
-    );
 end component;
 
 component column_decoder_128
@@ -94,10 +64,10 @@ end component;
   constant WIDTH : positive := 10;
   signal hcount, vcount                                : std_logic_vector(width-1 downto 0);
   signal column_enable, row_enable, video_on, clk25Mhz : std_logic;
-  signal column_address, row_address                   : std_logic_vector(5 downto 0);
-  signal rom_address, rom_out                          : std_logic_vector(11 downto 0);
-  signal column_address_128, row_address_128           : std_logic_vector(6 downto 0);
-  signal rom_address_128												       : std_logic_vector(13 downto 0);
+  signal column_address, row_address                   : std_logic_vector(6 downto 0);
+  signal rom_address												 : std_logic_vector(13 downto 0);
+  signal rom_out  				                         : std_logic_vector(11 downto 0);
+
 begin
   rom_address <= row_address & column_address;
 
@@ -117,43 +87,23 @@ begin
         hsync     => hsync,
         vsync     => vsync
       );
-  U_COL_DECODE : column_decoder
+  U_COL_DECODE : column_decoder_128
       port map (
         hcount    => hcount,
-        buttons   => buttons,
+        buttons   => not buttons,
         address   => column_address,
         enable    => column_enable
       );
-  U_ROW_DECODE : row_decoder
+  U_ROW_DECODE : row_decoder_128
       port map (
         vcount    => vcount,
-        buttons   => buttons,
+        buttons   => not buttons,
         address   => row_address,
         enable    => row_enable
       );
-  U_ROM : vga_rom
+  U_ROM : vga_rom_128
       port map (
         address => rom_address,
-        clock   => clk25Mhz,
-        q       => rom_out
-      );
-  U_COL_DECODE_128 : column_decoder_128
-      port map (
-        hcount    => hcount,
-        buttons   => not buttons,
-        address   => column_address_128,
-        enable    => column_enable
-      );
-  U_ROW_DECODE_128 : row_decoder_128
-      port map (
-        vcount    => vcount,
-        buttons   => not buttons,
-        address   => row_address_128,
-        enable    => row_enable
-      );
-  U_ROM_128 : vga_rom_128
-      port map (
-        address => rom_address_128 ,
         clock   => clk25Mhz,
         q       => rom_out
       );

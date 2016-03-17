@@ -3,18 +3,18 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use work.vga_lib.all;
 
-entity row_decoder is
+entity row_decoder_128 is
   generic (
-    WIDTH : positive := 10 );
+    WIDTH : positive := 11 );
   port (
       vcount  : in std_logic_vector(WIDTH-1 downto 0);
       buttons : in std_logic_vector(2 downto 0);
-      address : out std_logic_vector(5 downto 0);
+      address : out std_logic_vector(6 downto 0);
       enable  : out std_logic
     );
 end entity;
 
-architecture arch of row_decoder is
+architecture arch of row_decoder_128 is
 
   constant CENTER       : std_logic_vector(2 downto 0) := "000";
   constant TOP_LEFT     : std_logic_vector(2 downto 0) := "001";
@@ -33,27 +33,27 @@ begin
           when CENTER =>
             if ((unsigned(vcount) > to_unsigned(CENTERED_Y_START, vcount'length)) and (unsigned(vcount) < to_unsigned(CENTERED_Y_END, vcount'length))) then
               enable <= '1';
-              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(CENTERED_Y_START, vcount'length)) / 2, 6));
+              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(CENTERED_Y_START, vcount'length)) , 7));
             end if;
           when TOP_LEFT =>
             if ((unsigned(vcount) > to_unsigned(TOP_LEFT_Y_START, vcount'length)) and (unsigned(vcount) < to_unsigned(TOP_LEFT_Y_END, vcount'length))) then
               enable <= '1';
-              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(TOP_LEFT_Y_START, vcount'length)) / 2, 6));
+              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(TOP_LEFT_Y_START, vcount'length)) , 7));
               end if;
           when TOP_RIGHT =>
             if ((unsigned(vcount) > to_unsigned(TOP_RIGHT_Y_START, vcount'length)) and (unsigned(vcount) < to_unsigned(TOP_RIGHT_Y_END, vcount'length))) then
               enable <= '1';
-              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(TOP_RIGHT_Y_START, vcount'length)) / 2, 6));
+              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(TOP_RIGHT_Y_START, vcount'length)) , 7));
               end if;
           when BOTTOM_LEFT =>
             if ((unsigned(vcount) > to_unsigned(BOTTOM_LEFT_Y_START, vcount'length)) and (unsigned(vcount) < to_unsigned(BOTTOM_LEFT_Y_END, vcount'length))) then
               enable <= '1';
-              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(BOTTOM_LEFT_Y_START, vcount'length)) / 2, 6));
+              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(BOTTOM_LEFT_Y_START, vcount'length)) , 7));
               end if;
           when BOTTOM_RIGHT =>
             if ((unsigned(vcount) > to_unsigned(BOTTOM_RIGHT_Y_START, vcount'length)) and (unsigned(vcount) < to_unsigned(BOTTOM_RIGHT_Y_END, vcount'length))) then
               enable <= '1';
-              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(BOTTOM_RIGHT_Y_START, vcount'length)) / 2, 6));
+              address <= std_logic_vector(resize((unsigned(vcount) - to_unsigned(BOTTOM_RIGHT_Y_START, vcount'length)) , 7));
               end if;
           when others => null;
         end case;
