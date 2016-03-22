@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity vga is
   port (
       clk50MHz, rst : in std_logic;
+      option        : in std_logic;
       buttons       : in std_logic_vector(2 downto 0);
       red           : out std_logic_vector(3 downto 0);
       green         : out std_logic_vector(3 downto 0);
@@ -94,13 +95,16 @@ end component;
   constant WIDTH : positive := 10;
   signal hcount, vcount                                : std_logic_vector(width-1 downto 0);
   signal column_enable, row_enable, video_on, clk25Mhz : std_logic;
+  signal column_enable_128, row_enable_128             : std_logic;
   signal column_address, row_address                   : std_logic_vector(5 downto 0);
-  signal rom_address, rom_out                          : std_logic_vector(11 downto 0);
+  signal rom_address, rom_out, rom_out_128             : std_logic_vector(11 downto 0);
   signal column_address_128, row_address_128           : std_logic_vector(6 downto 0);
   signal rom_address_128												       : std_logic_vector(13 downto 0);
+  signal buttons_n                                     : std_logic_vector(2 downto 0);
 begin
   rom_address <= row_address & column_address;
-
+  rom_address_128 <= row_address_128 & column_address_128;
+  buttons_n <= not buttons;
   U_CLK_DIV : clk_div
       port map (
           clk_in  => clk50MHz,
@@ -120,14 +124,14 @@ begin
   U_COL_DECODE : column_decoder
       port map (
         hcount    => hcount,
-        buttons   => buttons,
+        buttons   => buttons_n,
         address   => column_address,
         enable    => column_enable
       );
   U_ROW_DECODE : row_decoder
       port map (
         vcount    => vcount,
-        buttons   => buttons,
+        buttons   => buttons_n,
         address   => row_address,
         enable    => row_enable
       );
@@ -140,30 +144,35 @@ begin
   U_COL_DECODE_128 : column_decoder_128
       port map (
         hcount    => hcount,
-        buttons   => not buttons,
+        buttons   => buttons_n,
         address   => column_address_128,
-        enable    => column_enable
+        enable    => column_enable_128
       );
   U_ROW_DECODE_128 : row_decoder_128
       port map (
         vcount    => vcount,
-        buttons   => not buttons,
+        buttons   => buttons_n,
         address   => row_address_128,
-        enable    => row_enable
+        enable    => row_enable_128
       );
   U_ROM_128 : vga_rom_128
       port map (
         address => rom_address_128 ,
         clock   => clk25Mhz,
-        q       => rom_out
+        q       => rom_out_128
       );
 combinational : process(column_enable, row_enable, video_on, rom_out)
 begin
 
-  if column_enable = '1' and row_enable = '1' and video_on = '1' then
+  if ((column_enable = '1' and row_enable = '1' and video_on = '1') and option = '0') then
     red <= rom_out(3 downto 0);
     green <= rom_out(7 downto 4);
     blue <= rom_out(11 downto 8);
+
+  elsif ((column_enable = '1' and row_enable = '1' and video_on = '1') and option = '1') then
+    red <= rom_out_128(3 downto 0);
+    green <= rom_out_128(7 downto 4);
+    blue <= rom_out_128(11 downto 8);
 
   else
     red <= (others => '0');

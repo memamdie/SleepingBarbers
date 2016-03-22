@@ -13,8 +13,6 @@ architecture arch of sync_gen_tb is
   signal rst                      : std_logic := '0';
   signal hcount, vcount           : std_logic_vector(9 downto 0);
   signal video_on, hsync, vsync   : std_logic;
-  signal rgb_h_count, rgb_v_count : std_logic_vector(9 downto 0);
-  signal v_pulse, h_pulse         : unsigned(6 downto 0);
 
 begin
 
@@ -34,27 +32,10 @@ begin
     testing : process
     begin
       rst <= '1';
-      h_pulse <= (others => '0');
-      v_pulse <= (others => '0');
       wait for 40 ns;
 
       rst <= '0';
-
-      if rising_edge(clk25Mhz) then
-        -- h_pulse <= (others => '0');
-        -- v_pulse <= (others => '0');
-        if hsync = '0' then
-          h_pulse <= h_pulse + 1;
-        -- else
-
-        end if;
-
-        if vsync = '0' then
-          v_pulse <= v_pulse + 1;
-        -- else
-
-        end if;
-      end if;
+      wait for 100 ms;
 
     report "DONE";
     wait;

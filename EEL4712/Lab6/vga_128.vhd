@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity vga is
+entity vga_128 is
   port (
       clk50MHz, rst : in std_logic;
       buttons       : in std_logic_vector(2 downto 0);
@@ -13,7 +13,7 @@ entity vga is
   );
 end entity;
 
-architecture arch of vga is
+architecture arch of vga_128 is
 
 component vga_rom_128
   port (
@@ -90,14 +90,14 @@ begin
   U_COL_DECODE : column_decoder_128
       port map (
         hcount    => hcount,
-        buttons   => not buttons,
+        buttons   => buttons,
         address   => column_address,
         enable    => column_enable
       );
   U_ROW_DECODE : row_decoder_128
       port map (
         vcount    => vcount,
-        buttons   => not buttons,
+        buttons   => buttons,
         address   => row_address,
         enable    => row_enable
       );
