@@ -10,7 +10,7 @@ entity datapath is
   acc_en, data_en, ir_en, pc_h_en, pc_l_en, x_h_en, x_l_en   : in std_logic;
   addr_h_en, addr_l_en, sp_l_en, sp_h_en, alu_en, b_en       : in std_logic;
   x_h_sel, x_l_sel, data_sel                                 : in std_logic;
-  int_bus_sel					                                       : in std_logic_vector(3 downto 0);
+  int_bus_sel					                                       : in std_logic_vector(2 downto 0);
   addr_sel, inc_sel,   index_inc_sel, pc_h_sel, pc_l_sel     : in std_logic_vector(1 downto 0);
   switch0, switch1, RAM                                      : in std_logic_vector(7 downto 0);
   alu_sel                                                    : in std_logic_vector(3 downto 0);
@@ -25,11 +25,11 @@ end entity;
 
 architecture arch of datapath is
   signal internal_bus, instruction, data_reg, accumulator, alu_out, alu_to_reg    : std_logic_vector(7 downto 0);
-  signal pc_h, pc_l, x_h, x_l, sp_h, sp_l, address_h, address_l, b_out            : std_logic_vector(7 downto 0);
+  signal sp_h, sp_l, address_h, address_l, b_out                                  : std_logic_vector(7 downto 0);
   signal mux_acc_out                                                              : std_logic_vector(7 downto 0);
   signal pc_en                                                                    : std_logic_vector(1 downto 0);
   signal c, v, z, s                                                               : std_logic;
-  signal int_bus_array                                                            : busIn(0 to 10);
+  signal int_bus_array                                                            : busIn(0 to 6);
   signal pc, sp, index, count, address_out, resized_b, index_post_inc             : std_logic_vector(15 downto 0);
   signal bufferStatus                                                             : std_logic_vector(3 downto 0);
   signal index_en, index_sel                                                      : std_logic_vector(1 downto 0);
@@ -43,15 +43,11 @@ architecture arch of datapath is
     status        <= bufferStatus;
     count         <= internal_bus & internal_bus;
     sp            <= sp_h & sp_l;
-    x_h           <= index(15 downto 8);
-    x_l           <= index(7 downto 0);
     index_sel     <= x_h_sel & x_l_sel;
     pc_en         <= pc_h_en & pc_l_en;
-    pc_h          <= pc(15 downto 8);
-    pc_l          <= pc(7 downto 0);
     address_out   <= address_h & address_l;
     address_bus   <= (index_post_inc, address_out, pc, sp_post_inc);
-    int_bus_array <= (data_reg, accumulator, sp_h, sp_l, x_h, x_l, RAM, alu_out, b_out, pc_l, pc_h);
+    int_bus_array <= (data_reg, accumulator, RAM, alu_out, b_out, pc(7 downto 0), pc(15 downto 8));
     control       <= instruction;
     U_INDEX_INC : entity work.adder
     port map (
@@ -60,7 +56,7 @@ architecture arch of datapath is
         output => index_post_inc
     );
     U_INT_BUS : entity work.bus_8bit
-    generic map (width => 11)
+    generic map (width => 7)
     port map(
     inputs    => int_bus_array,
     sel       => int_bus_sel,

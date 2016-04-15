@@ -6,7 +6,42 @@ Data_radix = hex;
 Content
   Begin
 
-0000: 40;
+%LDAA INPORT0%
+0000: 88;
+0001: FE;
+0002: FF;
 
-[0001..00FF] : 00;
+%STAR D%
+0003: F1;
+
+%LDAA INPORT1%
+0004: 88;
+0005: FF;
+0006: FF;
+
+%MULTIPLY%
+0007: 40;
+
+%STAA OUTPORT1%
+0008: F6;
+0009: FF;
+000A: FF;
+
+%LDAD%
+000B: 81;
+
+%STAA OUTPORT0%
+000C: F6;
+000D: FE;
+000E: FF;
+
+%CLRC%
+000F : F9;
+
+%BCCA%
+0010 : B0;
+0011 : 0F;
+0012 : 00;
+
+[0013..00FF] : 00;
 End;

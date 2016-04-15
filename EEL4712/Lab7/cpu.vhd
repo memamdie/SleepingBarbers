@@ -21,7 +21,7 @@ architecture arch of cpu is
   signal addr_h_en, addr_l_en, sp_l_en, sp_h_en, alu_en              : std_logic;
   signal b_en, sp_h_sel, sp_l_sel, data_sel                          : std_logic;
   signal x_l_sel, x_h_sel                                            : std_logic;
-  signal int_bus_sel					                                       : std_logic_vector(3 downto 0);
+  signal int_bus_sel					                                       : std_logic_vector(2 downto 0);
   signal addr_sel, inc_sel, index_inc_sel, sp_inc_sel                : std_logic_vector(1 downto 0);
   signal pc_h_sel, pc_l_sel, mux_acc_sel                             : std_logic_vector(1 downto 0);
   signal switch0, switch1, instruction                               : std_logic_vector(7 downto 0);

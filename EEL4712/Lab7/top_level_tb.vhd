@@ -42,9 +42,17 @@ begin
           wait for 50 ns;
           buttons <= "10";
           switches <= x"44";
-          wait for 150 ns;
+          wait for 100 ns;
           go <= '1';
-          wait for 2000 ns;
+          wait for 40000 ns;
+          -- rst <= '0';
+          -- wait for 50 ns;
+          -- rst <= '1';
+          -- wait for 40500 ns;
+          -- rst <= '0';
+          -- wait for 50 ns;
+          -- rst <= '1';
+          -- wait for 4050 ns;
           wait;
 
           report "DONE!!!!!!" severity note;

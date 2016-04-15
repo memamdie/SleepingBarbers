@@ -14,7 +14,7 @@ entity controller is
       x_l_sel, x_h_sel, sp_h_sel, sp_l_sel                       : out std_logic;
       data_sel                                                   : out std_logic;
       led_l_en, led_h_en                                         : out std_logic;
-      int_bus_sel					                                       : out std_logic_vector(3 downto 0);
+      int_bus_sel					                                       : out std_logic_vector(2 downto 0);
       pc_h_sel, pc_l_sel, mux_acc_sel                            : out std_logic_vector(1 downto 0);
       addr_sel, inc_sel, index_inc_sel, sp_inc_sel               : out std_logic_vector(1 downto 0);
       ext_bus_sel 																               : out std_logic_vector(1 downto 0);
@@ -71,7 +71,7 @@ begin
     pc_l_sel      <= "01";
     addr_sel      <= ADDR_ADDR;
     alu_sel       <= "0000";
-    int_bus_sel   <= "0000";
+    int_bus_sel   <= "000";
     ext_bus_sel   <= "00";
     inc_sel       <= "00";
 
@@ -79,25 +79,35 @@ begin
 
     case state is
 
-
+        -- initialize the computer
         when INIT =>
           pc_h_sel    <= "00";
           pc_l_sel    <= "00";
           next_state <= FETCH;
+
+        -- Fetch an instruction from the RAM
+        -- This state is returned to after incrementing the PC at the end of executing an instruction
         when FETCH =>
           pc_h_en <= '1';
           pc_l_en <= '1';
           addr_sel <= ADDR_PC;
           next_state <= READ_FROM_MEMORY;
+
+        -- This is how we read from memory so that we can fetch an instruction
         when READ_FROM_MEMORY =>
           --Enable is set to read by default
           -- since the output is not registered send it to the data bus
           ext_bus_sel <= RAM_L;
           next_state <= TRANSFER_EXT_TO_INT;
+
+        -- Transfer whatever is in the external bus to the internal bus
+        -- this requires a state of its own because there is a register between the external and internal busses.
         when TRANSFER_EXT_TO_INT =>
           int_bus_sel <= RAM_REG;
           ir_en <= '1';
           next_state <= DECODE;
+
+        -- In this state we figure out where to go next depending on the instruction that we have in the IR
         when DECODE =>
             if instruction = LDAI or instruction = LDAA or instruction = STAA or instruction = LDXI or instruction = LDAX or instruction = LDSI then
                 next_state <= PC_INC;
@@ -111,20 +121,41 @@ begin
                 next_state <= ALU_ZS_0;
             elsif instruction = SLRL or instruction = SRRL or instruction = ROLC or instruction = RORC then
                 next_state <= ALU_CZS_0;
-                -- cases when the branch is not taken
+            -- cases when the branch IS NOT taken
             elsif (instruction = BCCA and status(3) = '1') or (instruction = BCSA and status(3) = '0') or (instruction = BEQA and status(1) = '0') or (instruction = BMIA and status(0) = '0') or (instruction = BNEA and status(1) = '1') or (instruction = BPLA and status(0) = '1') or (instruction = BVCA and status(2) = '1') or (instruction = BVSA and status(2) = '0') then
                 next_state <= BRANCH_NOT_TAKEN;
-                -- cases when the branch is taken
+            -- cases when the branch IS taken
             elsif instruction = BCCA or instruction = BCSA or instruction = BEQA or instruction = BMIA or instruction = BNEA or instruction = BPLA or instruction = BVCA or instruction = BVSA then
                 next_state <= PC_INC;
+            elsif instruction = INCX then
+                next_state <= X_INC;
             elsif instruction = SETC or instruction = CLRC then
                 next_state <= SETC_0;
             elsif instruction = CALL then
                 next_state <= PC_INC;
-            elsif instruction = RET  then
+            elsif instruction = RET then
                 next_state <= RET_0;
-              end if;
+            elsif instruction = MULT then
+                next_state <= MULT_0;
+            end if;
 
+
+        when MULT_0 =>
+          mux_acc_sel <= "10";
+          data_sel <= '1';
+          acc_en <= '1';
+          data_en <= '1';
+          next_state <= INC_FETCH;
+        -- This state is used to increment the X register.
+        when X_INC =>
+            index_inc_sel <= "10";
+            x_h_sel <= '1';
+            x_l_sel <= '1';
+            x_h_en <= '1';
+            x_l_en <= '1';
+            next_state <= INC_FETCH;
+
+        -- This series of states is used when a return instruction is used
         when RET_0 =>
           sp_inc_sel <= "01";
           sp_h_sel <= '1';
