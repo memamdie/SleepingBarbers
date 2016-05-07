@@ -88,6 +88,6 @@ Dim A_a As Double, Pa_1 As Double, Pa_2 As Double
       A_a = (M*M*(((r0/12)*(1+(r0/12)^n))/((1+(r0/12)^n)-1))) + f
       Pa_1 = A_a*(1-(1+r1)^(-n))/r1
       Pa_2 = A_a*(1-(1+r2)^(-n))/r2
-      e_APR_fnMr0r1r2 = ((r1*Pa_2)-(r2*Pa_1))/(Pa2-Pa1)
-
+      e_APR_fnMr0r1r2 = ((r1*Pa_2)-(r2*Pa_1))/(Pa_2-Pa_1)
+ End If
 End Function
